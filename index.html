@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine-ie11.js"></script>
+   <script>
+   </script>
+   <style>
+       .flex{
+         
+           display:flex;
+           flex-direction:row;
+       }
+       span{
+           margin: 0 8px 0 4px;
+       }
+       .completed{
+           text-decoration:line-through;
+       }
+   </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div x-data="{todos:[], userInput:''}">
+    <form @submit.prevent>
+      <input type="text" placeholder="enter a todo" x-model="userInput" />
+      <button type="submit" @click="todos.push({name:userInput, completed:false}); userInput=''">press me</button>
+      <p x-text="userInput"></p>
+<!-- this HAS to be a template tag -->
+    <template x-for="(todo, index) in todos">
+        <div class='flex '>
+            <input x-model="todo.completed" type="checkbox" />
+            <!-- using + '' for template literal type effect -->
+            <span  x-text="index + ')' "><b></b></span><span :class="{completed: todo.completed}" x-text="' ' + todo.name"></span> 
+            <!--make sure to do todo= is put before filter or else it just returns true?  -->
+            <button style="margin-left: 9px" @click="todos=todos.filter(currTodo=>todo!==currTodo)">x</button>
+        </div>
+    </template>
+        <button  @click="todos=[]" x-show="todos.length">Clear All</button>
+        <template x-for="todo in todos">
+            <div>
+                <p x-show="todo.completed">completed:</p>
+                <p x-text="todo.completed?todo.name:''"></p>
+            </div>
+        </template>
+    </div>
+    </form>
+  </body>
+</html>
