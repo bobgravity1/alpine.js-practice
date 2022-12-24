@@ -24,6 +24,7 @@
   </head>
   <body>
     <div x-data="{todos:[], userInput:''}">
+        <p>to do:</p>
     <form @submit.prevent>
       <input type="text" placeholder="enter a todo" x-model="userInput" />
       <button type="submit" @click="todos.push({name:userInput, completed:false}); userInput=''">press me</button>
@@ -38,10 +39,10 @@
             <button style="margin-left: 9px" @click="todos=todos.filter(currTodo=>todo!==currTodo)">x</button>
         </div>
     </template>
-        <button  @click="todos=[]" x-show="todos.length">Clear All</button>
+        <button  x-html="todos.length>1?'delete all todos':'delete todo'" @click="todos=[]" x-show="todos.length"></button>
         <template x-for="todo in todos">
             <div>
-                <p x-show="todo.completed">completed:</p>
+                <p  x-show="todo.completed">completed:</p>
                 <p x-text="todo.completed?todo.name:''"></p>
             </div>
         </template>
